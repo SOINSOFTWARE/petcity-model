@@ -1,3 +1,4 @@
+/** Soin Software, 2018 */
 package com.soinsoftware.petcity.bll;
 
 import java.util.List;
@@ -5,47 +6,56 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import com.soinsoftware.petcity.manager.PetCityManagerFactory;
-import com.soinsoftware.petcity.model.Company;
+import com.soinsoftware.petcity.model.User;
 
 /**
- * 
  * @author Carlos Rodriguez
- * @since 13/08/2018
+ * @since 14/08/2018
  */
-public class CompanyBllTest extends TestCase {
-
-	private CompanyBll bll;
+public class UserBllTest extends TestCase {
+	
+	private UserBll bll;
 
 	protected void setUp() throws Exception {
 		super.setUp();
 		PetCityManagerFactory.getInstance();
-		bll = new CompanyBll();
+		bll = new UserBll();
 	}
 
 	protected void tearDown() throws Exception {
 		super.tearDown();
 		bll.closeDbConnection();
 	}
-
+	
 	public void testSelectAll() {
-		final List<Company> entities = bll.selectAll();
+		final List<User> entities = bll.selectAll();
 		assertNotNull(entities);
 		assertNotSame(entities.size(), 0);
 	}
 
 	public void testSelectEnabled() {
-		final List<Company> entities = bll.selectAll(true);
+		final List<User> entities = bll.selectAll(true);
 		assertNotNull(entities);
 		assertNotSame(entities.size(), 0);
 	}
 
 	public void testSelectByDocumentNotExists() {
-		final Company entity = bll.select("900957626-1");
+		final User entity = bll.select("19604741");
 		assertNull(entity);
 	}
 
 	public void testSelectByDocumentExists() {
-		final Company entity = bll.select("900957626-2");
+		final User entity = bll.select("19604742");
+		assertNotNull(entity);
+	}
+	
+	public void testSelectByLoginNotExists() {
+		final User entity = bll.select("carlos.rodriguez@soinsoftware.com", "Soin020486");
+		assertNull(entity);
+	}
+
+	public void testSelectByLoginExists() {
+		final User entity = bll.select("carlos.rodriguez@soinsoftware.com", "Soin#020486");
 		assertNotNull(entity);
 	}
 }
