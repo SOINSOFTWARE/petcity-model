@@ -6,8 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import lombok.extern.log4j.Log4j;
-
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
@@ -26,12 +25,12 @@ import com.soinsoftware.petcity.manager.PetCityManagerFactory;
  * @author Carlos Rodriguez
  * @since 13/08/2018
  */
-@Log4j
 @Transactional
 @SuppressWarnings("unchecked")
 public abstract class AbstractDataAccessibleObject<T, P> implements
 		DataAccessibleObject<T, P> {
-
+	
+	protected final Logger log = Logger.getLogger(AbstractDataAccessibleObject.class);
 	protected final EntityManager manager;
 
 	/**

@@ -7,14 +7,13 @@ import java.util.Properties;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import org.apache.log4j.Logger;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-
-import lombok.extern.log4j.Log4j;
 
 /**
  * This class builds the {@link EntityManagerFactory} object using the provided
@@ -23,9 +22,9 @@ import lombok.extern.log4j.Log4j;
  * @author Carlos Rodriguez
  * @since 13/08/2018
  */
-@Log4j
 public abstract class AbstractManagerFactory implements IEntityManagerFactory {
 
+	private Logger log = Logger.getLogger(AbstractManagerFactory.class);
 	protected EntityManagerFactory emf;
 
 	/**
