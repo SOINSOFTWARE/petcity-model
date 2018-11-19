@@ -1,6 +1,9 @@
 /** Soin Software, 2018 */
 package com.soinsoftware.petcity.model;
 
+import java.math.BigInteger;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -26,28 +29,22 @@ public class User extends CommonData {
 	
 	@NaturalId
 	private String document;
-	
 	private String name;
-	
 	@Column(name = "lastname")
 	private String lastName;
-	
 	private String phone;
-	
 	private String email;
-	
 	private String password;
-	
 	@ManyToOne
 	@JoinColumn(name = "idcompany")
 	private Company company;
-	
+
 	public User() {
 		super();
 	}
-	
+
 	public User(Builder builder) {
-		super(builder);
+		super(builder.id, builder.creation, builder.enabled);
 		this.document = builder.document;
 		this.name = builder.name;
 		this.lastName = builder.lastName;
@@ -85,21 +82,23 @@ public class User extends CommonData {
 		return company;
 	}
 
-	public class Builder extends CommonData.Builder {
+	public class Builder {
 		
+		private BigInteger id;
 		private String document;
-		
 		private String name;
-		
 		private String lastName;
-		
 		private String phone;
-		
 		private String email;
-		
 		private String password;
-		
 		private Company company;
+		private Date creation;
+		private boolean enabled;
+		
+		public Builder id(BigInteger id) {
+			this.id = id;
+			return this;
+		}
 
 		public Builder document(String document) {
 			this.document = document;
@@ -133,6 +132,16 @@ public class User extends CommonData {
 
 		public Builder company(Company company) {
 			this.company = company;
+			return this;
+		}
+
+		public Builder creation(Date creation) {
+			this.creation = creation;
+			return this;
+		}
+
+		public Builder enabled(boolean enabled) {
+			this.enabled = enabled;
 			return this;
 		}
 		

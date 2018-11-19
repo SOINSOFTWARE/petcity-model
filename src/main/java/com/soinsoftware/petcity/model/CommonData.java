@@ -34,11 +34,11 @@ public class CommonData implements Serializable {
 		super();
 	}
 
-	public CommonData(Builder builder) {
+	public CommonData(BigInteger id, Date creation, boolean enabled) {
 		super();
-		this.id = builder.id;
-		this.creation = builder.creation;
-		this.enabled = builder.enabled;
+		this.id = id;
+		this.creation = creation;
+		this.enabled = enabled;
 	}
 
 	public BigInteger getId() {
@@ -81,33 +81,5 @@ public class CommonData implements Serializable {
 			return false;
 		}
 		return true;
-	}
-
-	public class Builder {
-
-		private BigInteger id;
-
-		private Date creation;
-
-		private boolean enabled;
-
-		public Builder id(BigInteger id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder creation(Date creation) {
-			this.creation = creation;
-			return this;
-		}
-
-		public Builder enabled(boolean enabled) {
-			this.enabled = enabled;
-			return this;
-		}
-
-		public CommonData build() {
-			return new CommonData(this);
-		}
 	}
 }

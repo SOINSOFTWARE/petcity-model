@@ -2,6 +2,7 @@
 package com.soinsoftware.petcity.model;
 
 import java.math.BigInteger;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,16 +27,11 @@ public class Company extends CommonData {
 	
 	@NaturalId
 	private String document;
-	
 	private String name;
-	
 	private boolean paid;
-	
 	private String photo;
-	
 	@Column(name = "initialcustomid")
 	private BigInteger initialCustomId;
-	
 	@Column(name = "actualcustomid")
 	private BigInteger actualCustomId;
 	
@@ -44,7 +40,7 @@ public class Company extends CommonData {
 	}
 	
 	public Company(Builder builder) {
-		super(builder);
+		super(builder.id, builder.creation, builder.enabled);
 		this.document = builder.document;
 		this.name = builder.name;
 		this.paid = builder.paid;
@@ -76,20 +72,27 @@ public class Company extends CommonData {
 	public BigInteger getActualCustomId() {
 		return actualCustomId;
 	}
+	
+	public static Builder builder() {
+		return new Builder();
+	}
 
-	public class Builder extends CommonData.Builder {
+	public static class Builder {
 		
+		private BigInteger id;
 		private String document;
-		
 		private String name;
-		
 		private boolean paid;
-		
 		private String photo;
-		
 		private BigInteger initialCustomId;
-		
 		private BigInteger actualCustomId;
+		private Date creation;
+		private boolean enabled;
+		
+		public Builder id(BigInteger id) {
+			this.id = id;
+			return this;
+		}
 
 		public Builder document(String document) {
 			this.document = document;
@@ -118,6 +121,16 @@ public class Company extends CommonData {
 
 		public Builder actualCustomId(BigInteger actualCustomId) {
 			this.actualCustomId = actualCustomId;
+			return this;
+		}
+
+		public Builder creation(Date creation) {
+			this.creation = creation;
+			return this;
+		}
+
+		public Builder enabled(boolean enabled) {
+			this.enabled = enabled;
 			return this;
 		}
 		
