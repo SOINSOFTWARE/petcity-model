@@ -34,6 +34,7 @@ public class Company extends CommonData {
 	private BigInteger initialCustomId;
 	@Column(name = "actualcustomid")
 	private BigInteger actualCustomId;
+	private byte[] photoBlob;
 	
 	public Company() {
 		super();
@@ -47,6 +48,7 @@ public class Company extends CommonData {
 		this.photo = builder.photo;
 		this.initialCustomId = builder.initialCustomId;
 		this.actualCustomId = builder.actualCustomId;
+		this.photoBlob = builder.photoBlob;
 	}
 	
 	public String getDocument() {
@@ -73,8 +75,16 @@ public class Company extends CommonData {
 		return actualCustomId;
 	}
 	
+	public byte[] getPhotoBlob() {
+        return photoBlob;
+    }
+	
 	public static Builder builder() {
 		return new Builder();
+	}
+	
+	public static Builder builder(Company company) {
+		return new Builder(company);
 	}
 
 	public static class Builder {
@@ -88,7 +98,22 @@ public class Company extends CommonData {
 		private BigInteger actualCustomId;
 		private Date creation;
 		private boolean enabled;
+		private byte[] photoBlob;
 		
+		private Builder() {}
+		
+		private Builder(Company company) {
+			id(company.getId())
+				.document(company.document)
+				.name(company.name)
+				.paid(company.paid)
+				.photo(company.photo)
+				.initialCustomId(company.initialCustomId)
+				.actualCustomId(company.actualCustomId)
+				.creation(company.getCreation())
+				.enabled(company.isEnabled())
+				.photoBlob(company.photoBlob);
+		}
 		public Builder id(BigInteger id) {
 			this.id = id;
 			return this;
@@ -131,6 +156,11 @@ public class Company extends CommonData {
 
 		public Builder enabled(boolean enabled) {
 			this.enabled = enabled;
+			return this;
+		}
+		
+		public Builder photoBlob(byte[] photoBlob) {
+			this.photoBlob = photoBlob;
 			return this;
 		}
 		

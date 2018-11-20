@@ -29,6 +29,10 @@ public abstract class AbstractBll<T, P> {
 	public void save(final T entity) {
 		dao.persist(entity);
 	}
+	
+	public void update(final T entity) {
+		dao.update(entity);
+	}
 
 	public void delete(final T entity) {
 		dao.delete(entity);

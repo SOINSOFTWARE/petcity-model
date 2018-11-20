@@ -81,8 +81,16 @@ public class User extends CommonData {
 	public Company getCompany() {
 		return company;
 	}
+	
+	public static Builder builder() {
+		return new Builder();
+	}
+	
+	public static Builder builder(User user) {
+		return new Builder(user);
+	}
 
-	public class Builder {
+	public static class Builder {
 		
 		private BigInteger id;
 		private String document;
@@ -94,6 +102,21 @@ public class User extends CommonData {
 		private Company company;
 		private Date creation;
 		private boolean enabled;
+		
+		public Builder() {}
+		
+		public Builder(User user) {
+			id(user.getId())
+				.document(user.document)
+				.name(user.name)
+				.lastName(user.lastName)
+				.phone(user.phone)
+				.email(user.email)
+				.password(user.password)
+				.company(user.company)
+				.creation(user.getCreation())
+				.enabled(user.isEnabled());
+		}
 		
 		public Builder id(BigInteger id) {
 			this.id = id;

@@ -65,6 +65,25 @@ public interface DataAccessibleObject<T, P> {
 	 *            Object to be stored.
 	 */
 	void persist(EntityTransaction transaction, T record);
+	
+	/**
+	 * Called when record must be updated in database.
+	 * 
+	 * @param record
+	 *            Object to be stored.
+	 */
+	void update(T record);
+
+	/**
+	 * Called when record must be updated in database using a specific
+	 * transaction.
+	 * 
+	 * @param transaction
+	 *            {@link EntityTransaction} used to store record
+	 * @param record
+	 *            Object to be stored.
+	 */
+	void update(EntityTransaction transaction, T record);
 
 	/**
 	 * When using transaction to store data, use this method to roll back

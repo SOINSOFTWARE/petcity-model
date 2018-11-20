@@ -19,12 +19,7 @@ public class UserBllTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		PetCityManagerFactory.getInstance();
-		bll = new UserBll();
-	}
-
-	protected void tearDown() throws Exception {
-		super.tearDown();
-		bll.closeDbConnection();
+		bll = UserBll.getInstance();
 	}
 	
 	public void testSelectAll() {

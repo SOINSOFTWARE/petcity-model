@@ -56,15 +56,11 @@ public abstract class AbstractDataAccessibleObject<T, P> implements
 		final Criteria criteria = buildCriteriaWithEnabledRestriction(enabled);
 		return criteria.list();
 	}
-
+	
 	@Override
 	public void persist(T record) {
-		log.info("Persisting object: " + record.toString());
 		try {
-			if (!manager.getTransaction().isActive()) {
-				manager.getTransaction().begin();
-			}
-			manager.persist(record);
+			persist(manager.getTransaction(), record);
 		} finally {
 			manager.getTransaction().commit();
 		}
@@ -77,6 +73,25 @@ public abstract class AbstractDataAccessibleObject<T, P> implements
 			transaction.begin();
 		}
 		manager.persist(record);
+	}
+	
+	@Override
+	public void update(T record) {
+		try {
+			update(manager.getTransaction(), record);
+		} finally {
+			manager.getTransaction().commit();
+		}
+	}
+
+	@Override
+	public void update(final EntityTransaction transaction, final T record) {
+		log.info("Updating object: " + record.toString());
+		if (!transaction.isActive()) {
+			transaction.begin();
+		}
+		T merged = manager.merge(record);
+		persist(transaction, merged);
 	}
 
 	@Override

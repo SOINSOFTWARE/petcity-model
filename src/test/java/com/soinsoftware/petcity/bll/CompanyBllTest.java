@@ -16,15 +16,11 @@ public class CompanyBllTest extends TestCase {
 
 	private CompanyBll bll;
 
+	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		PetCityManagerFactory.getInstance();
-		bll = new CompanyBll();
-	}
-
-	protected void tearDown() throws Exception {
-		super.tearDown();
-		bll.closeDbConnection();
+		bll = CompanyBll.getInstance();
 	}
 
 	public void testSelectAll() {

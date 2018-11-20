@@ -13,7 +13,9 @@ import com.soinsoftware.petcity.model.User;
  */
 public class UserBll extends AbstractBll<User, BigInteger> {
 	
-	public UserBll() throws IOException {
+	private static UserBll instance;
+	
+	private UserBll() throws IOException {
 		super();
 		dao = new UserDao();
 	}
@@ -24,5 +26,12 @@ public class UserBll extends AbstractBll<User, BigInteger> {
 	
 	public User select(final String email, final String password) {
 		return ((UserDao) dao).select(email, password);
+	}
+	
+	public static UserBll getInstance() throws IOException {
+		if (instance == null) {
+			instance = new UserBll();
+		}
+		return instance;
 	}
 }
