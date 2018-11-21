@@ -8,6 +8,7 @@ import javax.persistence.EntityTransaction;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,17 +33,24 @@ public abstract class AbstractDataAccessibleObject<T, P> implements
 	
 	protected final Logger log = Logger.getLogger(AbstractDataAccessibleObject.class);
 	protected final EntityManager manager;
+	private final Class<T> clazz;
 
 	/**
 	 * Default constructor that must be used for all DAO implementations.
 	 * 
 	 * @throws IOException
 	 */
-	public AbstractDataAccessibleObject() throws IOException {
+	public AbstractDataAccessibleObject(final Class<T> clazz) throws IOException {
 		super();
 		final AbstractManagerFactory factory = PetCityManagerFactory
 				.getInstance();
 		this.manager = factory.createEntityManager();
+		this.clazz = clazz;
+	}
+	
+	@Override
+	public T selectById(P pk) {
+		return manager.find(clazz, pk);
 	}
 	
 	@Override
@@ -110,6 +118,12 @@ public abstract class AbstractDataAccessibleObject<T, P> implements
 	@Override
 	public void close() {
 		manager.close();
+	}
+	
+	@Override
+	public Criteria buildCriteria() {
+		final Session session = (Session) manager.getDelegate();
+		return session.createCriteria(clazz);
 	}
 
 	/**

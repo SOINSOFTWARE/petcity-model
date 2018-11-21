@@ -20,18 +20,7 @@ import com.soinsoftware.petcity.model.User;
 public class UserDao extends AbstractDataAccessibleObject<User, BigInteger> {
 
 	public UserDao() throws IOException {
-		super();
-	}
-
-	@Override
-	public User selectById(BigInteger pk) {
-		return manager.find(User.class, pk);
-	}
-
-	@Override
-	public Criteria buildCriteria() {
-		final Session session = (Session) manager.getDelegate();
-		return session.createCriteria(User.class);
+		super(User.class);
 	}
 	
 	public User select(final String document) {
@@ -40,7 +29,7 @@ public class UserDao extends AbstractDataAccessibleObject<User, BigInteger> {
 	}
 	
 	public User select(final String email, final String password) {
-		final Criteria criteria = buildCriteria();
+		final Criteria criteria = buildCriteriaWithEnabledRestriction(true);
 		final List<Criterion> predicates = new ArrayList<>();
 		predicates.add(Restrictions.eq("email", email));
 		predicates.add(Restrictions.eq("password", password));

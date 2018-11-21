@@ -8,11 +8,14 @@ import com.soinsoftware.petcity.dao.DataAccessibleObject;
  * @author Carlos Rodriguez
  * @since 13/08/2018
  */
-@SuppressWarnings(value = { "unchecked" })
 public abstract class AbstractBll<T, P> {
-
-	@SuppressWarnings("rawtypes")
-	protected DataAccessibleObject dao;
+	
+	protected DataAccessibleObject<T, P> dao;
+	
+	protected AbstractBll(DataAccessibleObject<T, P> dao) {
+		super();
+		this.dao = dao;
+	}
 
 	public List<T> selectAll() {
 		return dao.selectAll();

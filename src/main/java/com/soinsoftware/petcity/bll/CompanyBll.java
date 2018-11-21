@@ -15,8 +15,7 @@ public class CompanyBll extends AbstractBll<Company, BigInteger> {
 	private static CompanyBll instance;
 
 	private CompanyBll() throws IOException {
-		super();
-		dao = new CompanyDao();
+		super(new CompanyDao());
 	}
 
 	public Company select(final String document) {

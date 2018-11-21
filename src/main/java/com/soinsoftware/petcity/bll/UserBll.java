@@ -16,8 +16,7 @@ public class UserBll extends AbstractBll<User, BigInteger> {
 	private static UserBll instance;
 	
 	private UserBll() throws IOException {
-		super();
-		dao = new UserDao();
+		super(new UserDao());
 	}
 	
 	public User select(final String document) {

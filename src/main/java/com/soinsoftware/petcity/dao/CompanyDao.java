@@ -3,7 +3,6 @@ package com.soinsoftware.petcity.dao;
 import java.io.IOException;
 import java.math.BigInteger;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 
 import com.soinsoftware.petcity.model.Company;
@@ -15,18 +14,7 @@ import com.soinsoftware.petcity.model.Company;
 public class CompanyDao extends AbstractDataAccessibleObject<Company, BigInteger> {
 
 	public CompanyDao() throws IOException {
-		super();
-	}
-	
-	@Override
-	public Company selectById(final BigInteger pk) {
-		return manager.find(Company.class, pk);
-	}
-
-	@Override
-	public Criteria buildCriteria() {
-		final Session session = (Session) manager.getDelegate();
-		return session.createCriteria(Company.class);
+		super(Company.class);
 	}
 
 	public Company select(final String document) {
