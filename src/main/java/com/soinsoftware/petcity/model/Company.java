@@ -79,6 +79,10 @@ public class Company extends CommonData {
         return photoBlob;
     }
 	
+	@Override
+	public void validate() {
+	}
+	
 	public static Builder builder() {
 		return new Builder();
 	}

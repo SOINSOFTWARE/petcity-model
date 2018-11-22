@@ -82,6 +82,10 @@ public class User extends CommonData {
 		return company;
 	}
 	
+	@Override
+	public void validate() {
+	}
+	
 	public static Builder builder() {
 		return new Builder();
 	}
@@ -103,9 +107,9 @@ public class User extends CommonData {
 		private Date creation;
 		private boolean enabled;
 		
-		public Builder() {}
+		private Builder() {}
 		
-		public Builder(User user) {
+		private Builder(User user) {
 			id(user.getId())
 				.document(user.document)
 				.name(user.name)

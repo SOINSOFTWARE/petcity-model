@@ -17,7 +17,7 @@ import javax.persistence.TemporalType;
  * @since 13/08/2018
  */
 @MappedSuperclass
-public class CommonData implements Serializable {
+public abstract class CommonData implements Serializable {
 
 	private static final long serialVersionUID = -6961800919721222709L;
 
@@ -82,4 +82,6 @@ public class CommonData implements Serializable {
 		}
 		return true;
 	}
+	
+	public abstract void validate();
 }

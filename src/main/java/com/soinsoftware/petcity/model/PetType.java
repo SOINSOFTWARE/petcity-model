@@ -13,6 +13,8 @@ import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
+import com.soinsoftware.petcity.exception.ModelValidationException;
+
 /**
 * @author Carlos Rodriguez
 * @since 21/11/2018
@@ -48,6 +50,24 @@ public class PetType extends CommonData {
 		return company;
 	}
 	
+	@Override
+	public void validate() {
+		if (name == null || name.trim().isEmpty()) {
+			throw new ModelValidationException("El nombre de la especie es obligatorio");
+		}
+		if (company == null) {
+			throw new ModelValidationException("La veterinaria es obligatoria");
+		}
+	}
+	
+	public static Builder builder() {
+		return new Builder();
+	}
+	
+	public static Builder builder(PetType petType) {
+		return new Builder(petType);
+	}
+	
 	public static class Builder {
 		
 		private BigInteger id;
@@ -55,6 +75,16 @@ public class PetType extends CommonData {
 		private boolean enabled;
 		private String name;
 		private Company company;
+		
+		private Builder() {}
+		
+		private Builder(PetType petType) {
+			id(petType.getId())
+				.creation(petType.getCreation())
+				.enabled(petType.isEnabled())
+				.name(petType.getName())
+				.company(petType.getCompany());
+		}
 		
 		public Builder id(BigInteger id) {
 			this.id = id;
