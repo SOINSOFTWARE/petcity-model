@@ -5,59 +5,38 @@ import java.math.BigInteger;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
-import com.soinsoftware.petcity.exception.ModelValidationException;
-
 /**
  * @author Carlos Rodriguez
  * @since 22/11/2018
  */
-@Entity(name = "breed")
+@Entity(name = "foodbrand")
 @OptimisticLocking(type = OptimisticLockType.DIRTY)
 @DynamicUpdate
 @SelectBeforeUpdate
-public class Breed extends AbstractNameCompanyModel {
+public class FoodBrand extends AbstractNameCompanyModel {
 
-	private static final long serialVersionUID = 3187356044360567830L;
+	private static final long serialVersionUID = -1071730899425421828L;
 
-	@ManyToOne
-	@JoinColumn(name = "idpettype")
-	private PetType petType;
-
-	public Breed() {
+	public FoodBrand() {
 		super();
 	}
 
-	public Breed(Builder builder) {
+	public FoodBrand(Builder builder) {
 		super(builder.id, builder.creation, builder.enabled, builder.name, builder.company);
-		this.petType = builder.petType;
-	}
-
-	public PetType getPetType() {
-		return petType;
-	}
-
-	@Override
-	public void validate() {
-		super.validate();
-		if (petType == null) {
-			throw new ModelValidationException("La especie es obligatoria");
-		}
 	}
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public static Builder builder(Breed breed) {
-		return new Builder(breed);
+	public static Builder builder(FoodBrand foodBrand) {
+		return new Builder(foodBrand);
 	}
 
 	public static class Builder {
@@ -66,15 +45,14 @@ public class Breed extends AbstractNameCompanyModel {
 		private Date creation;
 		private boolean enabled;
 		private String name;
-		private PetType petType;
 		private Company company;
 
 		private Builder() {
 		}
 
-		private Builder(Breed breed) {
-			id(breed.getId()).creation(breed.getCreation()).enabled(breed.isEnabled()).name(breed.getName())
-					.petType(breed.getPetType()).company(breed.getCompany());
+		private Builder(FoodBrand foodBrand) {
+			id(foodBrand.getId()).creation(foodBrand.getCreation()).enabled(foodBrand.isEnabled())
+					.name(foodBrand.getName()).company(foodBrand.getCompany());
 		}
 
 		public Builder id(BigInteger id) {
@@ -97,18 +75,13 @@ public class Breed extends AbstractNameCompanyModel {
 			return this;
 		}
 
-		public Builder petType(PetType petType) {
-			this.petType = petType;
-			return this;
-		}
-
 		public Builder company(Company company) {
 			this.company = company;
 			return this;
 		}
 
-		public Breed build() {
-			return new Breed(this);
+		public FoodBrand build() {
+			return new FoodBrand(this);
 		}
 	}
 }

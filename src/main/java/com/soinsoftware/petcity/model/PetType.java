@@ -5,15 +5,11 @@ import java.math.BigInteger;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
-
-import com.soinsoftware.petcity.exception.ModelValidationException;
 
 /**
  * @author Carlos Rodriguez
@@ -23,41 +19,16 @@ import com.soinsoftware.petcity.exception.ModelValidationException;
 @OptimisticLocking(type = OptimisticLockType.DIRTY)
 @DynamicUpdate
 @SelectBeforeUpdate
-public class PetType extends CommonData {
+public class PetType extends AbstractNameCompanyModel {
 
 	private static final long serialVersionUID = -4499960650036322775L;
-
-	private String name;
-	@ManyToOne
-	@JoinColumn(name = "idcompany")
-	private Company company;
 
 	public PetType() {
 		super();
 	}
 
 	public PetType(Builder builder) {
-		super(builder.id, builder.creation, builder.enabled);
-		this.name = builder.name;
-		this.company = builder.company;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public Company getCompany() {
-		return company;
-	}
-
-	@Override
-	public void validate() {
-		if (name == null || name.trim().isEmpty()) {
-			throw new ModelValidationException("El nombre de la especie es obligatorio");
-		}
-		if (company == null) {
-			throw new ModelValidationException("La veterinaria es obligatoria");
-		}
+		super(builder.id, builder.creation, builder.enabled, builder.name, builder.company);
 	}
 
 	public static Builder builder() {
