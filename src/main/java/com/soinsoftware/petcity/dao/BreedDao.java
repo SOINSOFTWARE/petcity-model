@@ -10,24 +10,26 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
+import com.soinsoftware.petcity.model.Breed;
 import com.soinsoftware.petcity.model.Company;
 import com.soinsoftware.petcity.model.PetType;
 
 /**
  * @author Carlos Rodriguez
- * @since 21/11/2018
+ * @since 22/11/2018
  */
 @SuppressWarnings("unchecked")
-public class PetTypeDao extends AbstractDataAccessibleObject<PetType, BigInteger> {
+public class BreedDao extends AbstractDataAccessibleObject<Breed, BigInteger> {
 
-	public PetTypeDao() throws IOException {
-		super(PetType.class);
+	public BreedDao() throws IOException {
+		super(Breed.class);
 	}
 
-	public List<PetType> select(Company company) {
+	public List<Breed> select(Company company, PetType petType) {
 		final Criteria criteria = buildCriteriaWithEnabledRestriction(true);
 		final List<Criterion> predicates = new ArrayList<>();
 		predicates.add(Restrictions.or(Restrictions.eqOrIsNull("company", company), Restrictions.isNull("company")));
+		predicates.add(Restrictions.eq("petType", petType));
 		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
 		criteria.add(criterion);
 		return criteria.list();

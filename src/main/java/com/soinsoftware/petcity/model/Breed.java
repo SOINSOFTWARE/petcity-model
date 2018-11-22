@@ -17,33 +17,41 @@ import com.soinsoftware.petcity.exception.ModelValidationException;
 
 /**
  * @author Carlos Rodriguez
- * @since 21/11/2018
+ * @since 22/11/2018
  */
-@Entity(name = "pettype")
+@Entity(name = "breed")
 @OptimisticLocking(type = OptimisticLockType.DIRTY)
 @DynamicUpdate
 @SelectBeforeUpdate
-public class PetType extends CommonData {
+public class Breed extends CommonData {
 
-	private static final long serialVersionUID = -4499960650036322775L;
+	private static final long serialVersionUID = 3187356044360567830L;
 
 	private String name;
+	@ManyToOne
+	@JoinColumn(name = "idpettype")
+	private PetType petType;
 	@ManyToOne
 	@JoinColumn(name = "idcompany")
 	private Company company;
 
-	public PetType() {
+	public Breed() {
 		super();
 	}
 
-	public PetType(Builder builder) {
+	public Breed(Builder builder) {
 		super(builder.id, builder.creation, builder.enabled);
 		this.name = builder.name;
+		this.petType = builder.petType;
 		this.company = builder.company;
 	}
 
 	public String getName() {
 		return name;
+	}
+
+	public PetType getPetType() {
+		return petType;
 	}
 
 	public Company getCompany() {
@@ -53,7 +61,10 @@ public class PetType extends CommonData {
 	@Override
 	public void validate() {
 		if (name == null || name.trim().isEmpty()) {
-			throw new ModelValidationException("El nombre de la especie es obligatorio");
+			throw new ModelValidationException("El nombre de la raza es obligatorio");
+		}
+		if (petType == null) {
+			throw new ModelValidationException("La especie es obligatoria");
 		}
 		if (company == null) {
 			throw new ModelValidationException("La veterinaria es obligatoria");
@@ -64,8 +75,8 @@ public class PetType extends CommonData {
 		return new Builder();
 	}
 
-	public static Builder builder(PetType petType) {
-		return new Builder(petType);
+	public static Builder builder(Breed breed) {
+		return new Builder(breed);
 	}
 
 	public static class Builder {
@@ -74,14 +85,15 @@ public class PetType extends CommonData {
 		private Date creation;
 		private boolean enabled;
 		private String name;
+		private PetType petType;
 		private Company company;
 
 		private Builder() {
 		}
 
-		private Builder(PetType petType) {
-			id(petType.getId()).creation(petType.getCreation()).enabled(petType.isEnabled()).name(petType.getName())
-					.company(petType.getCompany());
+		private Builder(Breed breed) {
+			id(breed.getId()).creation(breed.getCreation()).enabled(breed.isEnabled()).name(breed.getName())
+					.petType(breed.getPetType()).company(breed.getCompany());
 		}
 
 		public Builder id(BigInteger id) {
@@ -104,13 +116,18 @@ public class PetType extends CommonData {
 			return this;
 		}
 
+		public Builder petType(PetType petType) {
+			this.petType = petType;
+			return this;
+		}
+
 		public Builder company(Company company) {
 			this.company = company;
 			return this;
 		}
 
-		public PetType build() {
-			return new PetType(this);
+		public Breed build() {
+			return new Breed(this);
 		}
 	}
 }
