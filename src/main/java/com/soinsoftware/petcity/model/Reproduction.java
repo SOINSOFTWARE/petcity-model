@@ -15,19 +15,19 @@ import org.hibernate.annotations.SelectBeforeUpdate;
  * @author Carlos Rodriguez
  * @since 22/11/2018
  */
-@Entity(name = "drenching")
+@Entity(name = "reproduction")
 @OptimisticLocking(type = OptimisticLockType.DIRTY)
 @DynamicUpdate
 @SelectBeforeUpdate
-public class Drenching extends AbstractNameCompanyModel {
+public class Reproduction extends AbstractNameCompanyModel {
 
 	private static final long serialVersionUID = -797281243971259428L;
 
-	public Drenching() {
+	public Reproduction() {
 		super();
 	}
 
-	public Drenching(Builder builder) {
+	public Reproduction(Builder builder) {
 		super(builder.id, builder.creation, builder.enabled, builder.name, builder.company);
 	}
 
@@ -35,8 +35,8 @@ public class Drenching extends AbstractNameCompanyModel {
 		return new Builder();
 	}
 
-	public static Builder builder(Drenching drenching) {
-		return new Builder(drenching);
+	public static Builder builder(Reproduction reproduction) {
+		return new Builder(reproduction);
 	}
 
 	public static class Builder {
@@ -50,9 +50,9 @@ public class Drenching extends AbstractNameCompanyModel {
 		private Builder() {
 		}
 
-		private Builder(Drenching drenching) {
-			id(drenching.getId()).creation(drenching.getCreation()).enabled(drenching.isEnabled())
-					.name(drenching.getName()).company(drenching.getCompany());
+		private Builder(Reproduction reproduction) {
+			id(reproduction.getId()).creation(reproduction.getCreation()).enabled(reproduction.isEnabled())
+					.name(reproduction.getName()).company(reproduction.getCompany());
 		}
 
 		public Builder id(BigInteger id) {
@@ -80,8 +80,8 @@ public class Drenching extends AbstractNameCompanyModel {
 			return this;
 		}
 
-		public Drenching build() {
-			return new Drenching(this);
+		public Reproduction build() {
+			return new Reproduction(this);
 		}
 	}
 }

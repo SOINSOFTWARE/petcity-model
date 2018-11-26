@@ -35,8 +35,8 @@ public class Vaccine extends AbstractNameCompanyModel {
 		return new Builder();
 	}
 
-	public static Builder builder(Vaccine foodBrand) {
-		return new Builder(foodBrand);
+	public static Builder builder(Vaccine vaccine) {
+		return new Builder(vaccine);
 	}
 
 	public static class Builder {
@@ -50,9 +50,9 @@ public class Vaccine extends AbstractNameCompanyModel {
 		private Builder() {
 		}
 
-		private Builder(Vaccine foodBrand) {
-			id(foodBrand.getId()).creation(foodBrand.getCreation()).enabled(foodBrand.isEnabled())
-					.name(foodBrand.getName()).company(foodBrand.getCompany());
+		private Builder(Vaccine vaccine) {
+			id(vaccine.getId()).creation(vaccine.getCreation()).enabled(vaccine.isEnabled())
+					.name(vaccine.getName()).company(vaccine.getCompany());
 		}
 
 		public Builder id(BigInteger id) {

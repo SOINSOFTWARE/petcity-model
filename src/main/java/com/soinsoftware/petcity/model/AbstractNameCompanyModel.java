@@ -4,8 +4,6 @@ package com.soinsoftware.petcity.model;
 import java.math.BigInteger;
 import java.util.Date;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 import com.soinsoftware.petcity.exception.ModelValidationException;
@@ -15,40 +13,30 @@ import com.soinsoftware.petcity.exception.ModelValidationException;
  * @since 22/11/2018
  */
 @MappedSuperclass
-public class AbstractNameCompanyModel extends CommonData {
+public class AbstractNameCompanyModel extends AbstractCompanyModel {
 
 	private static final long serialVersionUID = -244268414737742537L;
-	
+
 	private String name;
-	@ManyToOne
-	@JoinColumn(name = "idcompany")
-	private Company company;
 
 	public AbstractNameCompanyModel() {
 		super();
 	}
 
 	public AbstractNameCompanyModel(BigInteger id, Date creation, boolean enabled, String name, Company company) {
-		super(id, creation, enabled);
+		super(id, creation, enabled, company);
 		this.name = name;
-		this.company = company;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public Company getCompany() {
-		return company;
-	}
-
 	@Override
 	public void validate() {
+		super.validate();
 		if (name == null || name.trim().isEmpty()) {
 			throw new ModelValidationException("El nombre es obligatorio");
-		}
-		if (company == null) {
-			throw new ModelValidationException("La veterinaria es obligatoria");
 		}
 	}
 }
