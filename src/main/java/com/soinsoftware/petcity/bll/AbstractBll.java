@@ -31,6 +31,7 @@ public abstract class AbstractBll<T, P> {
 	}
 
 	public void save(final T entity) {
+		((CommonData) entity).validate();
 		if (((CommonData) entity).getId() == null) {
 			dao.persist(entity);
 		} else {
