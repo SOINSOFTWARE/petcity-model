@@ -61,6 +61,11 @@ public class ClinicHistory extends AbstractCompanyModel {
 			pet.validate();
 		}
 	}
+	
+	@Override
+	public String getTitle() {
+		return "Historia: " + ((recordCustomId != null) ? recordCustomId.toString() : pet.getName()) ;
+	}
 
 	public static Builder builder() {
 		return new Builder();

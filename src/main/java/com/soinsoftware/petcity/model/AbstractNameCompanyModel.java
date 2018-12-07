@@ -13,7 +13,7 @@ import com.soinsoftware.petcity.exception.ModelValidationException;
  * @since 22/11/2018
  */
 @MappedSuperclass
-public class AbstractNameCompanyModel extends AbstractCompanyModel {
+public abstract class AbstractNameCompanyModel extends AbstractCompanyModel {
 
 	private static final long serialVersionUID = -244268414737742537L;
 
@@ -38,5 +38,10 @@ public class AbstractNameCompanyModel extends AbstractCompanyModel {
 		if (name == null || name.trim().isEmpty()) {
 			throw new ModelValidationException("El nombre es obligatorio");
 		}
+	}
+
+	@Override
+	public String getTitle() {
+		return name;
 	}
 }

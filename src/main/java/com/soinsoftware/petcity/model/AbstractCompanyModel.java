@@ -15,7 +15,7 @@ import com.soinsoftware.petcity.exception.ModelValidationException;
  * @since 26/11/2018
  */
 @MappedSuperclass
-public class AbstractCompanyModel extends CommonData {
+public abstract class AbstractCompanyModel extends CommonData {
 
 	private static final long serialVersionUID = -244268414737742537L;
 

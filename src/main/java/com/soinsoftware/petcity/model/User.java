@@ -86,6 +86,11 @@ public class User extends CommonData {
 	public void validate() {
 	}
 	
+	@Override
+	public String getTitle() {
+		return name + " " + lastName;
+	}
+	
 	public static Builder builder() {
 		return new Builder();
 	}

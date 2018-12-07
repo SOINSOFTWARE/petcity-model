@@ -109,7 +109,8 @@ public abstract class AbstractDataAccessibleObject<T, P> implements
 	}
 
 	@Override
-	public void rollbackTransaction(final EntityTransaction transaction) {
+	public void rollbackTransaction() {
+		EntityTransaction transaction = manager.getTransaction();
 		if (transaction != null) {
 			transaction.rollback();
 		}

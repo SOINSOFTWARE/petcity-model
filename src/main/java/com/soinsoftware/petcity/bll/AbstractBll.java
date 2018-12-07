@@ -3,6 +3,7 @@ package com.soinsoftware.petcity.bll;
 import java.util.List;
 
 import com.soinsoftware.petcity.dao.DataAccessibleObject;
+import com.soinsoftware.petcity.model.CommonData;
 
 /**
  * @author Carlos Rodriguez
@@ -30,15 +31,15 @@ public abstract class AbstractBll<T, P> {
 	}
 
 	public void save(final T entity) {
-		dao.persist(entity);
+		if (((CommonData) entity).getId() == null) {
+			dao.persist(entity);
+		} else {
+			dao.update(entity);
+		}
 	}
 	
-	public void update(final T entity) {
-		dao.update(entity);
-	}
-
-	public void delete(final T entity) {
-		dao.delete(entity);
+	public void rollback() {
+		dao.rollbackTransaction();
 	}
 
 	public void closeDbConnection() {

@@ -84,4 +84,6 @@ public abstract class CommonData implements Serializable {
 	}
 	
 	public abstract void validate();
+	
+	public abstract String getTitle();
 }
