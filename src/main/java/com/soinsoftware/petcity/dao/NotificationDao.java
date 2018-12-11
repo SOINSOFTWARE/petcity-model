@@ -50,7 +50,7 @@ public class NotificationDao extends AbstractDataAccessibleObject<Notification, 
 		criteria.createAlias("pet", "p");
 		final List<Criterion> predicates = new ArrayList<>();
 		predicates.add(Restrictions.eq("p.company", company));
-		Restrictions.between("notificationdate", initialDate, finalDate);
+		predicates.add(Restrictions.between("notificationDate", initialDate, finalDate));
 		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
 		criteria.add(criterion);
 		return criteria.list();

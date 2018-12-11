@@ -60,4 +60,12 @@ public class NotificationBllTest extends TestCase {
 		assertNotNull(entities);
 		assertNotSame(entities.size(), 0);
 	}
+	
+	public void testSelectByCompanyAndDateWrongDate() throws IOException {
+		final Company company = CompanyBll.getInstance().select("900957626-2");
+		final LocalDate dateTime = LocalDate.of(2017, 11, 10);
+		final List<Notification> entities = bll.select(company, dateTime);
+		assertNotNull(entities);
+		assertSame(entities.size(), 0);
+	}
 }
