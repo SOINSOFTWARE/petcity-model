@@ -3,12 +3,14 @@ package com.soinsoftware.petcity.bll;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.joda.time.DateTime;
 
 import com.soinsoftware.petcity.dao.NotificationDao;
 import com.soinsoftware.petcity.model.Company;
@@ -41,21 +43,19 @@ public class NotificationBll extends AbstractBll<Notification, BigInteger> {
 				.collect(Collectors.toList());
 	}
 
-	public List<Notification> select(Company company, Date notificationDate) {
-		Date initialDate = buildDate(notificationDate, 0, 0, 0);
-		Date finalDate = buildDate(notificationDate, 23, 59, 59);
-		List<Notification> notifications = ((NotificationDao) dao).select(company, initialDate, finalDate);
+	public List<Notification> select(Company company, LocalDate localDate) {
+		LocalDateTime initialDate = buildLocalDateTime(localDate, 0, 0, 0);
+		LocalDateTime finalDate = buildLocalDateTime(localDate, 23, 59, 59);
+		List<Notification> notifications = ((NotificationDao) dao).select(company,
+				Date.from(initialDate.atZone(ZoneId.systemDefault()).toInstant()),
+				Date.from(finalDate.atZone(ZoneId.systemDefault()).toInstant()));
 		return notifications.stream()
 				.sorted(Comparator.comparing(notification -> ((Notification) notification).getNotificationDate()))
 				.collect(Collectors.toList());
 	}
 
-	private Date buildDate(Date date, int hourOfDay, int minuteOfHour, int secondOfMinute) {
-		DateTime dateTime = new DateTime(date.getTime());
-		int year = dateTime.getYear();
-		int monthOfYear = dateTime.getMonthOfYear();
-		int dayOfMonth = dateTime.getDayOfMonth();
-		return new DateTime(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, secondOfMinute).toDate();
+	private LocalDateTime buildLocalDateTime(LocalDate localDate, int hourOfDay, int minuteOfHour, int secondOfMinute) {
+		return LocalDateTime.of(localDate, LocalTime.of(hourOfDay, minuteOfHour, secondOfMinute));
 	}
 
 	public static NotificationBll getInstance() throws IOException {

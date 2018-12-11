@@ -3,9 +3,8 @@ package com.soinsoftware.petcity.bll;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.time.LocalDate;
 import java.util.List;
-
-import org.joda.time.DateTime;
 
 import com.soinsoftware.petcity.manager.PetCityManagerFactory;
 import com.soinsoftware.petcity.model.Company;
@@ -56,8 +55,8 @@ public class NotificationBllTest extends TestCase {
 
 	public void testSelectByCompanyAndDate() throws IOException {
 		final Company company = CompanyBll.getInstance().select("900957626-2");
-		final DateTime dateTime = new DateTime(2016, 11, 11, 14, 50, 50);
-		final List<Notification> entities = bll.select(company, dateTime.toDate());
+		final LocalDate dateTime = LocalDate.of(2016, 11, 11);
+		final List<Notification> entities = bll.select(company, dateTime);
 		assertNotNull(entities);
 		assertNotSame(entities.size(), 0);
 	}
